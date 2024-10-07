@@ -1,4 +1,3 @@
-<style>
 /* Define o estado inicial do hero ocupando toda a tela */
 .hero-wrap {
   position: fixed;
@@ -20,4 +19,3 @@
   opacity: 0;
   transform: translateY(-50px); /* Posição inicial fora da tela */
 }
-</style>
