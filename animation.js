@@ -14,7 +14,7 @@
       ease: "power2.inOut"
     })
     // Faz o conteúdo aparecer após a animação do hero
-    .to(".hero-wrap .content", {
+    .to(".hero-content", {
       opacity: 1,
       duration: 1,
       ease: "power1.inOut"
