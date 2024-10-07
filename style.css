@@ -1,0 +1,23 @@
+<style>
+/* Define o estado inicial do hero ocupando toda a tela */
+.hero-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #7ac142; /* O verde do hero */
+  z-index: 10;
+  overflow: hidden;
+}
+
+/* Estado inicial do conteúdo e do navbar para o GSAP */
+.hero-wrap .content {
+  opacity: 0; /* Inicia escondido */
+}
+
+.navbar {
+  opacity: 0;
+  transform: translateY(-50px); /* Posição inicial fora da tela */
+}
+</style>
