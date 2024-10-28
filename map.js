@@ -130,3 +130,54 @@ var map;
   document.getElementById('permitir-localizacao').addEventListener('click', function() {
     getUserLocation();
   });
+
+  // Adiciona o item à lista de pontos
+  var listItem = document.createElement('div');
+  listItem.className = 'list-item';
+  listItem.innerHTML = `
+    <h3>{{wf {&quot;path&quot;:&quot;nome-do-local&quot;,&quot;type&quot;:&quot;PlainText&quot;\} }}</h3>
+    <p>{{wf {&quot;path&quot;:&quot;endereco-completo&quot;,&quot;type&quot;:&quot;PlainText&quot;\} }}</p>
+    <a href="https://www.google.com/maps/dir/?api=1&destination={{wf {&quot;path&quot;:&quot;latitude&quot;,&quot;type&quot;:&quot;PlainText&quot;\} }},{{wf {&quot;path&quot;:&quot;longitude&quot;,&quot;type&quot;:&quot;PlainText&quot;\} }}" target="_blank">Como chegar</a>
+  `;
+  document.getElementById('point-list').appendChild(listItem);
+
+  // Evento ao clicar no item da lista para centralizar o marcador
+  listItem.addEventListener('click', function() {
+    map.setCenter({ lat: lat, lng: lng });
+    map.setZoom(15);
+    openCustomInfoWindow(cmsMarker, title, address, lat, lng);
+  });
+
+  // Evento ao clicar no marcador para abrir o InfoWindow personalizado
+  cmsMarker.addListener('click', function() {
+    openCustomInfoWindow(cmsMarker, title, address, lat, lng);
+  });
+
+// Função para abrir um InfoWindow personalizado para o marcador
+function openCustomInfoWindow(marker, title, address, lat, lng) {
+var contentString = `
+  <div class="info-window">
+    <div class="info-window-content">
+      <h3>{{wf {&quot;path&quot;:&quot;nome-do-local&quot;,&quot;type&quot;:&quot;PlainText&quot;\} }}</h3>
+      <p>{{wf {&quot;path&quot;:&quot;endereco-completo&quot;,&quot;type&quot;:&quot;PlainText&quot;\} }}</p>
+      <a href="https://www.google.com/maps/dir/?api=1&destination={{wf {&quot;path&quot;:&quot;latitude&quot;,&quot;type&quot;:&quot;PlainText&quot;\} }},{{wf {&quot;path&quot;:&quot;longitude&quot;,&quot;type&quot;:&quot;PlainText&quot;\} }}" target="_blank">Como chegar <span>→</span></a>
+      <button class="info-window-close" onclick="closeInfoWindow()">×</button>
+    </div>
+  </div>
+`;
+
+var infoWindow = new google.maps.InfoWindow({
+  content: contentString,
+  maxWidth: 250
+});
+
+// Abre o InfoWindow no mapa
+infoWindow.open(map, marker);
+
+// Fecha o InfoWindow ao clicar no botão de fechar
+google.maps.event.addListener(infoWindow, 'domready', function() {
+  document.querySelector('.info-window-close').addEventListener('click', function() {
+    infoWindow.close();
+  });
+});
+}
